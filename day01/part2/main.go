@@ -13,8 +13,10 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	total := 0
 
-	// regex to match only numbers
-	numMatcher := regexp.MustCompile("[a-zA-Z]")
+	// regex to match only letters
+	letterMatcher := regexp.MustCompile("[a-zA-Z]")
+	// replace words for numbers with actual numbers, and leave the end chars
+	// so that other partial number names can be matched
 	replacer := strings.NewReplacer(
 		"one", "o1e",
 		"two", "t2o",
@@ -33,9 +35,10 @@ func main() {
 			break
 		}
 
+		// run the replacer twice
 		text = replacer.Replace(text)
 		text = replacer.Replace(text)
-		number := numMatcher.ReplaceAll([]byte(text), []byte(""))
+		number := letterMatcher.ReplaceAll([]byte(text), []byte(""))
 		output := string(number[0]) + string(number[len(number) - 1])
 
 		outputNum, _ := strconv.Atoi(output)

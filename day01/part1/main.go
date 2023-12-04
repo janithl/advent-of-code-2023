@@ -12,8 +12,8 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	total := 0
 
-	// regex to match only numbers
-	numMatcher := regexp.MustCompile("[a-zA-Z]")
+	// regex to match only letters
+	letterMatcher := regexp.MustCompile("[a-zA-Z]")
 
 	for scanner.Scan() {
 		text := scanner.Text()
@@ -21,7 +21,7 @@ func main() {
 			break
 		}
 
-		number := numMatcher.ReplaceAll([]byte(text), []byte(""))
+		number := letterMatcher.ReplaceAll([]byte(text), []byte(""))
 		output := string(number[0]) + string(number[len(number) - 1])
 
 		outputNum, _ := strconv.Atoi(output)
